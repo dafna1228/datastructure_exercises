@@ -4,14 +4,15 @@ public class Heap {
 	public static void main(String[] args) {
 		Tank t1 = new Tank("ba");
 		Tank t2 = new Tank("dbb");
+        Tank t3 = new Tank("dFb");
+        Tank t4 = new Tank("F");
 		Heap h = new Heap();
-		h.insert(t1);
+		h.insert(t1); h.insert(t2); h.insert(t3); h.insert(t4);
 		System.out.println(h);
-		h.insert(t2);
-		System.out.println(h);
-		System.out.println(h.findMax());
+		h.extractMax();
+        System.out.println(h);
 
-	}
+    }
 
 	private Tank[] data;
 	private int size; 
@@ -20,7 +21,7 @@ public class Heap {
 	 * Creates an empty list.
 	 */
 	public Heap(){
-		this.data = new Tank[10000];
+		this.data = new Tank[10001];
 		// init each tank in the array
 		for (int i = 0; i < size; i++) {
 			this.data[i] = new Tank("");
@@ -97,10 +98,41 @@ public class Heap {
 	 * 
 	 */
 	public void extractMax(){
-		//Your code comes here
+        if (size >= 1) {
+            // put the last tank in the place of the root
+            data[0] = data[size - 1];
+            data[size - 1] = null;
+            size--;
+            // maxheapify the root
+            if (size > 1) {
+                maxHeapify(0);
+            }
+        }
 	}
-	
-	
+
+    public void maxHeapify(int i){
+        int maxChild = getMaxChild(i) ;
+        while (data[i].compareTo(data[maxChild]) < 0) {
+            // swap i and maxChild
+            Tank temp = data[maxChild];
+            data[maxChild] = data[i];
+            data[i] = temp;
+            // change index of i and it's child to the new location
+            i = maxChild;
+            maxChild = getMaxChild(i);
+        }
+    }
+
+    // get the index the child with the largest value
+    public int getMaxChild(int i){
+        int child1 = 2*i + 1;
+        if ( child1 > size - 1) {
+            // if i is a leaf index, return i
+            return i;
+        }
+        int child2 = child1 == size - 1 ? child1: child1 + 1;
+        return data[child1].compareTo(data[child2]) > 0 ? child1 : child2;
+    }
 	/**
 	 * Returns the tank with the k highest serial number in the heap.
 	 * Should run in time O(klog(n)).
