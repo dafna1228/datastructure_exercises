@@ -6,11 +6,12 @@ public class Heap {
 		Tank t2 = new Tank("dbb");
         Tank t3 = new Tank("dFb");
         Tank t4 = new Tank("F");
+		Tank t5 = new Tank("dr");
+		Tank t6 = new Tank("F");
 		Heap h = new Heap();
-		h.insert(t1); h.insert(t2); h.insert(t3); h.insert(t4);
+		h.insert(t1); h.insert(t2); h.insert(t3); h.insert(t4); h.insert(t5); h.insert(t6);
 		System.out.println(h);
-		h.extractMax();
-        System.out.println(h);
+        System.out.println(h.findKbiggest(2));
 
     }
 
@@ -141,8 +142,13 @@ public class Heap {
 	 * @return the tank with the k highest serial number in the heap.
 	 */
 	public Tank findKbiggest(int k){
-		//Your code comes here
-		return null;
+		Heap kheap = this;
+		// extract the maximal element k times
+		for (int i = 0; i < k - 1; i++) {
+			kheap.extractMax();
+		}
+		// the root is now the k'th maximal element
+		return kheap.findMax();
 	}
 	
 	/**
