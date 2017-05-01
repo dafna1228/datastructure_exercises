@@ -1,6 +1,18 @@
 
 public class Heap {
 
+	public static void main(String[] args) {
+		Tank t1 = new Tank("ba");
+		Tank t2 = new Tank("dbb");
+		Heap h = new Heap();
+		h.insert(t1);
+		System.out.println(h);
+		h.insert(t2);
+		System.out.println(h);
+		System.out.println(h.findMax());
+
+	}
+
 	private Tank[] data;
 	private int size; 
 	
@@ -120,5 +132,13 @@ public class Heap {
 	public boolean contains(Tank t){
 		//Your code comes here
 		return false;
+	}
+
+	public String toString(){
+		String ans = "[ ";
+		for (int i = 0; i < size; i ++) {
+			ans += data[i] + ", ";
+		}
+		return ans + "]";
 	}
 }
