@@ -8,7 +8,12 @@ public class Heap {
 	 * Creates an empty list.
 	 */
 	public Heap(){
-		//Your code comes here
+		this.data = new Tank[10000];
+		// init each tank in the array
+		for (int i = 0; i < size; i++) {
+			this.data[i] = new Tank("");
+		}
+		this.size = size();
 	}
 	
 	/**
@@ -17,8 +22,7 @@ public class Heap {
 	 * @return the size of the heap
 	 */
 	public int size(){
-		//Your code comes here
-		return 0;
+		return this.size;
 	}
 	
 	/**
@@ -28,9 +32,43 @@ public class Heap {
 	 * @param t - the tank to be inserted.
 	 */
 	public void insert(Tank t){
-		//Your code comes here
+		// insert the new tank at the end of the list, as a "leaf"
+		data[size] = t;
+		size++;
+		if (size > 1) {
+			// percolate the tank up until reaching a correct position
+			percolate(size - 1);
+		}
 	}
-	
+
+	/**
+	 * Move a node up the tree, as long needed, until it reaches correct level.
+	 * runs in O(log(n)).
+	 *
+	 * @param i - the tank index in the list to be percolated.
+	 */
+	public void percolate(int i){
+		int parentIndex = getParent(i) ;
+		while (data[i].compareTo(data[parentIndex]) > 0) {
+			// swap parent and child
+			Tank temp = data[parentIndex];
+			data[parentIndex] = data[i];
+			data[i] = temp;
+			// change index of i and it's parent to the new location
+			i = parentIndex;
+			parentIndex = getParent(i);
+		}
+	}
+
+	// get the index of the parent node
+	public int getParent(int i){
+		if (i == 0) {
+			//if the given index is root, return root
+			return 0;
+		}
+		return i%2 == 1 ? (i-1)/2 : (i-2)/2;
+	}
+
 	/**
 	 * Returns the tank with the highest serial number in the heap.
 	 * Should run in time O(1).
@@ -38,8 +76,7 @@ public class Heap {
 	 * @return the tank with the highest serial number in the heap.
 	 */
 	public Tank findMax(){
-		//Your code comes here
-		return null;
+		return data[0];
 	}
 	
 	/**
