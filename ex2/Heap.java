@@ -11,7 +11,8 @@ public class Heap {
 		Heap h = new Heap();
 		h.insert(t1); h.insert(t2); h.insert(t3); h.insert(t4); h.insert(t5); h.insert(t6);
 		System.out.println(h);
-        System.out.println(h.findKbiggest(2));
+        h.removeKbiggest(4);
+        System.out.println(h);
 
     }
 
@@ -158,7 +159,18 @@ public class Heap {
 	 * @param k
 	 */
 	public void removeKbiggest(int k){
-		//Your code comes here
+        Heap tempHeap = new Heap();
+        // extract the maximal element k - 1 times, put it in tempHeap
+        for (int i = 0; i < k - 1; i++) {
+            tempHeap.insert(this.findMax());
+            this.extractMax();
+        }
+        // the root is now the k'th maximal element. remove it
+        this.extractMax();
+        // return all the tanks we put in tempHeap
+        for (int i = 0; i < k - 1; i++) {
+            this.insert(tempHeap.data[i]);
+        }
 	}
 	
 	/**
@@ -168,7 +180,11 @@ public class Heap {
 	 * @return true if and only if the tank is in the heap.
 	 */
 	public boolean contains(Tank t){
-		//Your code comes here
+		for (int i = 0; i < size; i++){
+		    if (data[i].compareTo(t) == 0) {
+		        return true;
+            }
+        }
 		return false;
 	}
 
