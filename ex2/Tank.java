@@ -1,15 +1,5 @@
 
 public class Tank implements Comparable<Tank>{
-
-	public static void main(String[] args) {
-		Tank t1 = new Tank("bA");
-		Tank t2 = new Tank("DBB");
-		Tank t22 = new Tank("dbB");
-
-		System.out.println(t1.compareTo(t2));
-		System.out.println(t2.compareTo(t1));
-		System.out.println(t22.compareTo(t2));
-	}
 	
 	private String serialNumber;
 	
@@ -52,7 +42,7 @@ public class Tank implements Comparable<Tank>{
 	}
 
 	// convert a char to int
-	public int charToInt(char ch){
+	private int charToInt(char ch){
 		// if capital letter
 		if ((int) ch >= 65 && (int) ch <= 90) {
 			return (int) ch - 65;
@@ -61,10 +51,6 @@ public class Tank implements Comparable<Tank>{
 			return  (int) ch - 97;
 		}
 		return 0;
-	}
-
-	public String toString(){
-		return serialNumber + " " + this.serialNumber();
 	}
 	
 }

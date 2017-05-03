@@ -1,21 +1,6 @@
 
 public class Heap {
 
-	public static void main(String[] args) {
-		Tank t1 = new Tank("ba");
-		Tank t2 = new Tank("dbb");
-        Tank t3 = new Tank("dFb");
-        Tank t4 = new Tank("F");
-		Tank t5 = new Tank("dr");
-		Tank t6 = new Tank("F");
-		Heap h = new Heap();
-		h.insert(t1); h.insert(t2); h.insert(t3); h.insert(t4); h.insert(t5); h.insert(t6);
-		System.out.println(h);
-        h.removeKbiggest(4);
-        System.out.println(h);
-
-    }
-
 	private Tank[] data;
 	private int size; 
 	
@@ -23,7 +8,7 @@ public class Heap {
 	 * Creates an empty list.
 	 */
 	public Heap(){
-		this.data = new Tank[10001];
+		this.data = new Tank[10000];
 		// init each tank in the array
 		for (int i = 0; i < size; i++) {
 			this.data[i] = new Tank("");
@@ -62,7 +47,7 @@ public class Heap {
 	 *
 	 * @param i - the tank index in the list to be percolated.
 	 */
-	public void percolate(int i){
+	private void percolate(int i){
 		int parentIndex = getParent(i) ;
 		while (data[i].compareTo(data[parentIndex]) > 0) {
 			// swap parent and child
@@ -76,7 +61,7 @@ public class Heap {
 	}
 
 	// get the index of the parent node
-	public int getParent(int i){
+	private int getParent(int i){
 		if (i == 0) {
 			//if the given index is root, return root
 			return 0;
@@ -112,7 +97,7 @@ public class Heap {
         }
 	}
 
-    public void maxHeapify(int i){
+    private void maxHeapify(int i){
         int maxChild = getMaxChild(i) ;
         while (data[i].compareTo(data[maxChild]) < 0) {
             // swap i and maxChild
@@ -126,7 +111,7 @@ public class Heap {
     }
 
     // get the index the child with the largest value
-    public int getMaxChild(int i){
+    private int getMaxChild(int i){
         int child1 = 2*i + 1;
         if ( child1 > size - 1) {
             // if i is a leaf index, return i
@@ -135,6 +120,7 @@ public class Heap {
         int child2 = child1 == size - 1 ? child1: child1 + 1;
         return data[child1].compareTo(data[child2]) > 0 ? child1 : child2;
     }
+
 	/**
 	 * Returns the tank with the k highest serial number in the heap.
 	 * Should run in time O(klog(n)).
@@ -188,11 +174,5 @@ public class Heap {
 		return false;
 	}
 
-	public String toString(){
-		String ans = "[ ";
-		for (int i = 0; i < size; i ++) {
-			ans += data[i] + ", ";
-		}
-		return ans + "]";
-	}
+
 }
