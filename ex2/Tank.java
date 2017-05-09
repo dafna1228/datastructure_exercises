@@ -52,5 +52,5 @@ public class Tank implements Comparable<Tank>{
 		}
 		return 0;
 	}
-	
+
 }

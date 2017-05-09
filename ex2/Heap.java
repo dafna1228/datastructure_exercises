@@ -116,8 +116,10 @@ public class Heap {
         if ( child1 > size - 1) {
             // if i is a leaf index, return i
             return i;
-        }
-        int child2 = child1 == size - 1 ? child1: child1 + 1;
+        } else if (child1 == size - 1) {
+        	return child1;
+		}
+        int child2 = child1 + 1;
         return data[child1].compareTo(data[child2]) > 0 ? child1 : child2;
     }
 
@@ -129,13 +131,17 @@ public class Heap {
 	 * @return the tank with the k highest serial number in the heap.
 	 */
 	public Tank findKbiggest(int k){
-		Heap kheap = this;
+		// copy the heap
+		Heap copyHeap = new Heap();
+		for(int i = 0; i < size - 1; i++){
+			copyHeap.insert(data[i]);
+		}
 		// extract the maximal element k times
 		for (int i = 0; i < k - 1; i++) {
-			kheap.extractMax();
+			copyHeap.extractMax();
 		}
 		// the root is now the k'th maximal element
-		return kheap.findMax();
+		return copyHeap.findMax();
 	}
 	
 	/**
@@ -176,3 +182,5 @@ public class Heap {
 
 
 }
+
+
