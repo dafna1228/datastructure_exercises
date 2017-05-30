@@ -16,9 +16,25 @@ public class Sorting {
 	 * @param arr - the array to be sorted
 	 */
 	public static void quickSort(double[] arr){
+		int start = 0;
+		int end = arr.length - 1;
+		// calling a recursive quicksort function
+		quickSortRecursive(arr, start, end);
+	}
+
+	public static void quickSortRecursive(double[] arr, int start, int end){
+		if (start < end); {
+			int middle = partition(arr, start, end);
+
+		}
+	}
+	public static int partition(double[] arr, start int, end int){
 		//your code comes here
 	}
-	
+
+	public static void quickSortTest(double[] arr){
+		//your code comes here
+	}
 	/**
 	 * Sorts a given array using the merge sort algorithm.
 	 * 
