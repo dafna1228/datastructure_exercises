@@ -32,11 +32,11 @@ public class Sorting {
 	}
 
 	public static int partition(double[] arr, int start, int end){
-		double pilot = arr[end];
+		double pivot = arr[end];
 		int leftWall = start;
 		for (int i = start; i < end; i++ ){
 			// if this item is smaller than the pilot
-			if (arr[i] < pilot){
+			if (arr[i] < pivot){
 				// move the wall one index right
 				leftWall = leftWall + 1;
 				// switch arr[leftWall] with arr[i]
@@ -111,10 +111,68 @@ public class Sorting {
 	 * @return the number which would be at index i, if the array was to be sorted
 	 */
 	public static double select (double[] arr, int i){
-		//your code comes here
-		return 0.0;
+		if (i < 0 || i > arr.length){
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		int start = 0;
+		int end = arr.length - 1;
+		return selectRecursive(arr, start, end, i);
 	}
-	
+
+	public static double selectRecursive (double[] arr, int start, int end, int i){
+		if (start == end){
+			return start;
+		}
+		double[] medianArr = new double[(end - start)/5];
+		for (int k = 0; k < medianArr.length - 1; k++ ){
+			int j = k*5 + start;
+			medianArr[k] = median(arr, j);
+		}
+		double pivot = selectRecursive(medianArr, 1, medianArr.length, medianArr.length/2);
+		int middle = partition(arr, start, end, pivot);
+		if (middle == i){
+			return arr[i];
+		} else if (middle < i){
+			return selectRecursive(arr, start, middle - 1, i);
+		} else if (middle > i) {
+			return selectRecursive(arr, middle + 1, end, i);
+		}
+		return -1.0;
+	}
+
+	// find the median from a set of 5 numbers, from arr. uses quicksort.
+	public static double median (double[] arr, int index) {
+		double[] L = new double[5];
+		for (int i = 0; i < 5; i++){
+			L[i] =  arr[index + i];
+		}
+		quickSort(L);
+		return L[2];
+	}
+
+	public static int partition(double[] arr, int start, int end, double pivot){
+		int leftWall = start;
+		int rightWall = end;
+		while (true) {
+			while (arr[leftWall] < pivot){
+				// move forward until finding an element bigger that the pivot
+				leftWall = leftWall + 1;
+			}
+			while (arr[rightWall] > pivot){
+				// move backwards until finding an element smaller that the pivot
+				rightWall = rightWall - 1;
+			}
+			// break if finished switching the elements to the correct places
+			if (leftWall >= rightWall){
+				return rightWall;
+			}
+			// swap those elements
+			double temp = arr[rightWall];
+			arr[rightWall] = arr[leftWall];
+			arr[leftWall] = temp;
+		}
+	}
+
 	/**
 	 * Sorts a given array using the selection sort algorithm.
 	 * 
