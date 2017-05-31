@@ -1,4 +1,5 @@
 import java.util.Random;
+import Plotter.Plotter;
 
 public class Sorting {
 
@@ -23,18 +24,35 @@ public class Sorting {
 	}
 
 	public static void quickSortRecursive(double[] arr, int start, int end){
-		if (start < end); {
+		if (start < end) {
 			int middle = partition(arr, start, end);
-
+			quickSortRecursive(arr, start, middle - 1);
+			quickSortRecursive(arr, middle + 1, end);
 		}
 	}
-	public static int partition(double[] arr, start int, end int){
-		//your code comes here
+
+	public static int partition(double[] arr, int start, int end){
+		double pilot = arr[end];
+		int leftWall = start;
+		for (int i = start; i < end; i++ ){
+			// if this item is smaller than the pilot
+			if (arr[i] < pilot){
+				// move the wall one index right
+				leftWall = leftWall + 1;
+				// switch arr[leftWall] with arr[i]
+				double temp = arr[leftWall - 1];
+				arr[leftWall - 1] = arr[i];
+				arr[i] = temp;
+			}
+		}
+		// switch arr[leftWall + 1] with the pilot
+		double temp = arr[leftWall];
+		arr[leftWall] = arr[end];
+		arr[end] = temp;
+
+		return leftWall;
 	}
 
-	public static void quickSortTest(double[] arr){
-		//your code comes here
-	}
 	/**
 	 * Sorts a given array using the merge sort algorithm.
 	 * 
@@ -73,10 +91,16 @@ public class Sorting {
 	}
 	
 	public static void main(String[] args) {
+		double[] arr = {80.0, 2.4, 3.5, 100.3, 45.3, 4.5, 5.6, 70.4, 0.5, 30.5};
+		//double[] arr = {5.0, 2.0, 4.0, 1.0, 3.0};
+		quickSort(arr);
+		for (int i = 0; i< arr.length; i++){
+			System.out.print(arr[i] + " ");
+		}
 		selectionVsQuick();
-		mergeVsQuick();
-		mergeVsQuickOnSortedArray();
-		selectVsMerge();
+		//mergeVsQuick();
+		//mergeVsQuickOnSortedArray();
+		//selectVsMerge();
 	}
 	
 	/**
