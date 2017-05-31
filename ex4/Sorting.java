@@ -61,9 +61,45 @@ public class Sorting {
 	 * @param arr - the array to be sorted
 	 */
 	public static void mergeSort(double[] arr){
-		//your code comes here
+		int start = 0;
+		int end = arr.length - 1;
+		mergeSortRecursive(arr, start, end);
 	}
-	
+
+	public static void mergeSortRecursive(double[] arr, int start, int end) {
+		if (start < end) {
+			int middle = (start + end) / 2;
+			mergeSortRecursive(arr, start, middle);
+			mergeSortRecursive(arr, middle + 1, end);
+			merge(arr, start, middle, end);
+		}
+	}
+	public static void merge(double[] arr, int start, int middle, int end){
+		int n1 = middle - start + 1;
+		int n2 = end - middle;
+		double[] L = new double[n1 + 1]; double[] R = new double[n2 + 1];
+		// creating subarrays of the left and right sides of the given subarray
+		for (int i = 0; i < n1; i++){
+			L[i] = arr[start + i];
+		}
+		for (int i = 0; i < n2; i++){
+			R[i] = arr[middle + i + 1];
+		}
+		// putting fake infinity values at the end of the arrays R, L
+		L[n1] = 100000.0;
+		R[n2] = 100000.0;
+		int i = 0; int j = 0;
+		// looping through the array, and placing the smaller element from both lists
+		for (int k = start; k < end + 1; k++) {
+			if (L[i] < R[j]) {
+				arr[k] = L[i];
+				i = i + 1;
+			} else{
+				arr[k] = R[j];
+				j = j + 1;
+			}
+		}
+	}
 
 	/**
 	 * finds the i'th order statistic of a given array.
@@ -91,15 +127,17 @@ public class Sorting {
 	}
 	
 	public static void main(String[] args) {
-		double[] arr = {80.0, 2.4, 3.5, 100.3, 45.3, 4.5, 5.6, 70.4, 0.5, 30.5};
+		//double[] arr = {80.0, 2.4, 3.5, 100.3, 45.3, 4.5, 5.6, 70.4, 0.5, 30.5};
 		//double[] arr = {5.0, 2.0, 4.0, 1.0, 3.0};
-		quickSort(arr);
+		double[] arr = {5.0, 2.0, 8.0, 7.0, 4.0, 1.0, 3.0, 6.0};
+		mergeSort(arr);
+
 		for (int i = 0; i< arr.length; i++){
 			System.out.print(arr[i] + " ");
 		}
-		selectionVsQuick();
-		//mergeVsQuick();
-		//mergeVsQuickOnSortedArray();
+		//selectionVsQuick();
+		mergeVsQuick();
+		mergeVsQuickOnSortedArray();
 		//selectVsMerge();
 	}
 	
