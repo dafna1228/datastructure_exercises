@@ -111,7 +111,7 @@ public class Sorting {
 	 * @return the number which would be at index i, if the array was to be sorted
 	 */
 	public static double select (double[] arr, int i){
-		if (i < 0 || i > arr.length){
+		if (i < 0 || i > arr.length - 1){
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		int start = 0;
@@ -120,48 +120,59 @@ public class Sorting {
 	}
 
 	public static double selectRecursive (double[] arr, int start, int end, int i){
+		// if arr is of length 1- return the only element
 		if (start == end){
-			return start;
+			return arr[start];
 		}
-		double[] medianArr = new double[(end - start)/5];
-		for (int k = 0; k < medianArr.length - 1; k++ ){
+
+		//create the median of medians array
+		double[] medianArr = new double[(end - start)/5 + 1];
+		for (int k = 0; k < medianArr.length; k++ ){
 			int j = k*5 + start;
-			medianArr[k] = median(arr, j);
+			medianArr[k] = median(arr, end, j);
 		}
-		double pivot = selectRecursive(medianArr, 1, medianArr.length, medianArr.length/2);
+
+		// select a pivot out of the median of medians array
+		double pivot = selectRecursive(medianArr, 0, medianArr.length - 1, medianArr.length/2);
+		//use partition to get the pivot's location
 		int middle = partition(arr, start, end, pivot);
+		// continue select on an appropriate sub array
 		if (middle == i){
 			return arr[i];
 		} else if (middle < i){
-			return selectRecursive(arr, start, middle - 1, i);
-		} else if (middle > i) {
 			return selectRecursive(arr, middle + 1, end, i);
+		} else if (middle > i) {
+			return selectRecursive(arr, start, middle - 1, i);
 		}
 		return -1.0;
 	}
 
 	// find the median from a set of 5 numbers, from arr. uses quicksort.
-	public static double median (double[] arr, int index) {
-		double[] L = new double[5];
-		for (int i = 0; i < 5; i++){
-			L[i] =  arr[index + i];
+	public static double median (double[] arr, int end, int index) {
+		int length = ((end + 1 -index) < 5) ? (end + 1 -index) : 5;
+		double[] L = new double[length];
+		for (int i = 0; i < L.length; i++){
+			L[i] = arr[i + index];
 		}
 		quickSort(L);
-		return L[2];
+		return L[length / 2];
 	}
 
 	public static int partition(double[] arr, int start, int end, double pivot){
 		int leftWall = start;
 		int rightWall = end;
+
 		while (true) {
 			while (arr[leftWall] < pivot){
 				// move forward until finding an element bigger that the pivot
 				leftWall = leftWall + 1;
 			}
+
 			while (arr[rightWall] > pivot){
 				// move backwards until finding an element smaller that the pivot
 				rightWall = rightWall - 1;
 			}
+
 			// break if finished switching the elements to the correct places
 			if (leftWall >= rightWall){
 				return rightWall;
@@ -170,6 +181,7 @@ public class Sorting {
 			double temp = arr[rightWall];
 			arr[rightWall] = arr[leftWall];
 			arr[leftWall] = temp;
+
 		}
 	}
 
@@ -181,22 +193,30 @@ public class Sorting {
 	 * @param arr - the array to be sorted
 	 */
 	public static void selectionSort(double[] arr){
-		//your code comes here
+		for (int i = 0; i < arr.length; i++ ){
+			int min = i;
+			for (int j = min + 1; j < arr.length; j++){
+				// if item in j is smaller than the minimum, it's the new minimum
+				if (arr[j] < arr[min]){
+					min = j;
+				}
+			}
+			// swap the minimum and the element at i
+			double temp = arr[min];
+			arr[min] = arr[i];
+			arr[i] = temp;
+		}
 	}
 	
 	public static void main(String[] args) {
-		//double[] arr = {80.0, 2.4, 3.5, 100.3, 45.3, 4.5, 5.6, 70.4, 0.5, 30.5};
+		double[] arr = {80.0, 2.4, 3.5, 100.3, 45.3, 4.5, 5.6, 70.4, 0.5, 30.5, 80.9, 3.0};
 		//double[] arr = {5.0, 2.0, 4.0, 1.0, 3.0};
-		double[] arr = {5.0, 2.0, 8.0, 7.0, 4.0, 1.0, 3.0, 6.0};
-		mergeSort(arr);
+		//double[] arr = {5.0, 2.0, 8.0, 7.0, 4.0, 1.0, 3.0, 6.0};
 
-		for (int i = 0; i< arr.length; i++){
-			System.out.print(arr[i] + " ");
-		}
-		//selectionVsQuick();
+		selectionVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
-		//selectVsMerge();
+		selectVsMerge();
 	}
 	
 	/**
