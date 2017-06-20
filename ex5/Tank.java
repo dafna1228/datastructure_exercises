@@ -42,5 +42,7 @@ public class Tank implements Comparable<Tank>{
 		return ans;
 	}
 
-	
+	public String toString(){
+			return serialNumber + " " + this.serialNumber();
+		}
 }
