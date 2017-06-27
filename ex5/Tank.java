@@ -1,8 +1,22 @@
-package HW5;
+//package HW5;
 
-public class Tank implements Comparable<Tank>{
-	
-	String serialNumber;
+//public class Tank implements Comparable<Tank>{
+class Tank {
+
+
+	public static void main(String[] args) {
+		Tank t1 = new Tank("bA");
+		Tank t2 = new Tank("DBB");
+		Tank t22 = new Tank("dbB");
+
+		System.out.println(t1);
+		System.out.println(t2);
+
+		System.out.println(t1.compareTo(t2));
+		System.out.println(t2.compareTo(t1));
+	}
+
+		String serialNumber;
 	
 	/**
 	 * A standard constructor for the tank class.

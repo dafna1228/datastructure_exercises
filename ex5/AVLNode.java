@@ -1,4 +1,4 @@
-package HW5;
+//package HW5;
 // Basic node stored in AVL trees
 
 class AVLNode {
@@ -10,11 +10,9 @@ class AVLNode {
 		System.out.println(t1);
 		System.out.println(t2);
 
-		System.out.println(t1.compareTo(t2));
-		System.out.println(t2.compareTo(t1));
 
 		AVLNode n1 = new AVLNode(t1);
-		AVLNode n2 = new AVLNode(t1, null, n1, n1 );
+		AVLNode n2 = new AVLNode(t2, null, n1, n1 );
 
 		System.out.println(n1);
 		System.out.println(n2);
@@ -56,6 +54,6 @@ class AVLNode {
     }
 
 	public String toString(){
-		return this.t;
+    	return this.t.toString();
 	}
 }

@@ -1,4 +1,4 @@
-package HW5;
+//package HW5;
 
 public class TerminationFactory {
 
@@ -22,7 +22,7 @@ public class TerminationFactory {
 	 * @param t - the new tank.
 	 */
 	public void insert(Tank t){
-		//your code comes here  
+		T1.insert(t);
 	}
 	
 	
