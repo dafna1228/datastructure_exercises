@@ -2,21 +2,6 @@
 // Basic node stored in AVL trees
 
 class AVLNode {
-	public static void main(String[] args) {
-		Tank t1 = new Tank("bA");
-		Tank t2 = new Tank("DBB");
-		Tank t22 = new Tank("dbB");
-
-		System.out.println(t1);
-		System.out.println(t2);
-
-
-		AVLNode n1 = new AVLNode(t1);
-		AVLNode n2 = new AVLNode(t2, null, n1, n1 );
-
-		System.out.println(n1);
-		System.out.println(n2);
-	}
 	
 	Tank t;				// The data in the node
 	AVLNode parent;		// The parent
