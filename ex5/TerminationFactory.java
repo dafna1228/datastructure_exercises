@@ -9,7 +9,8 @@ public class TerminationFactory {
 	 * Creates a new empty factor.
 	 */
 	public TerminationFactory(){
-		//your code comes here  
+		this.T1 = new AVLTree();
+		this.T2 = new AVLTree();
 	}
 	
 	/**
@@ -43,11 +44,14 @@ public class TerminationFactory {
 	 * @return 0,1 or 2, depending on the situation of the tank.
 	 */
 	public int checkTerminated(Tank t){
-		//your code comes here  
-		return 0;
+		if (this.T1.search(t) != null){
+			return 1;
+		} else if (this.T2.search(t) != null){
+			return 0;
+		}
+		return 2;
 	}
-	
-	
+
 	/**
 	 * Returns a sorted array of all the tanks which were already terminated.
 	 * A tank is considered terminated only if the dismantleTanks() function
@@ -57,8 +61,7 @@ public class TerminationFactory {
 	 * @return an array sorted according to serial numbers.
 	 */
 	public Tank[] listTerminatedTanks(){
-		//your code comes here  
-		return null;
+		return this.T2.inorder();
 	}
 	
 	/**
@@ -70,8 +73,7 @@ public class TerminationFactory {
 	 * @return an array sorted according to serial numbers.
 	 */
 	public Tank[] listNonTerminatedTanks(){
-		//your code comes here  
-		return null;
+		return this.T1.inorder();
 	}
 	
 	/**
@@ -80,6 +82,11 @@ public class TerminationFactory {
 	 * 
 	 */
 	public void dismantleTanks(){
-		//your code comes here  
+		Tank[] T1Arr = this.T1.inorder();
+		for (int i = 0; i < T1Arr.length; i++){
+			this.T2.insert(T1Arr[i]);
+		}
+		T1.root = null;
+		T1.size = 0;
 	}
 }
